@@ -3,6 +3,8 @@
   padding: 0;
   box-sizing: border-box;
 }
+
 .active {
-  color: red;
+  background-color: red;
+  color: white;
 }

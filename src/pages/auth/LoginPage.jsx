@@ -1,18 +1,20 @@
 import React, { useState } from "react";
-import { loginUser, registerUser } from "../../store/users/users.action";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { loginUser } from "../../store/users/users.actions";
+
 const LoginPage = () => {
-  const [registerObj, setRegisterOgb] = useState({
+  const [registerObj, setRegisterObj] = useState({
     email: "",
     password: "",
   });
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   function handleChange(e) {
     const { value, name } = e.target;
-    setRegisterOgb({ ...registerObj, [name]: value });
+    setRegisterObj({ ...registerObj, [name]: value });
   }
 
   function handleSubmit(e) {
@@ -23,27 +25,25 @@ const LoginPage = () => {
         return;
       }
     }
+    console.log("hello");
     dispatch(loginUser({ user: registerObj, navigate }));
   }
   const { error } = useSelector((state) => state.users);
-
-  console.log(error, "erorrrrrrrr");
-
   return (
     <form onSubmit={handleSubmit}>
-      <h2>login form</h2>
-      {error && <h2>{error}!!!</h2>}
+      <h2>Login form</h2>
+      {error && <h2 style={{ color: "red" }}>{error}!!!</h2>}
       <input
         onChange={handleChange}
-        name="email"
         value={registerObj.email}
+        name="email"
         placeholder="Email"
         type="email"
       />
       <input
         onChange={handleChange}
-        name="password"
         value={registerObj.password}
+        name="password"
         placeholder="Password"
         type="text"
       />

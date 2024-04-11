@@ -1,19 +1,21 @@
 import React, { useState } from "react";
-import { registerUser } from "../../store/users/users.action";
 import { useDispatch, useSelector } from "react-redux";
+import { registerUser } from "../../store/users/users.actions";
 import { useNavigate } from "react-router-dom";
+
 const RegisterPage = () => {
-  const [registerObj, setRegisterOgb] = useState({
+  const [registerObj, setRegisterObj] = useState({
     email: "",
     password: "",
     password_confirm: "",
   });
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   function handleChange(e) {
     const { value, name } = e.target;
-    setRegisterOgb({ ...registerObj, [name]: value });
+    setRegisterObj({ ...registerObj, [name]: value });
   }
 
   function handleSubmit(e) {
@@ -26,33 +28,32 @@ const RegisterPage = () => {
     }
     dispatch(registerUser({ ...registerObj, navigate }));
   }
-  const { error } = useSelector((state) => state.users);
 
-  console.log(error, "erorrrrrrrr");
+  const { error } = useSelector((state) => state.users);
 
   return (
     <form onSubmit={handleSubmit}>
-      <h2>register form</h2>
-      {error && <h2>{error}!!!</h2>}
+      <h2>Register form</h2>
+      {error && <h2 style={{ color: "red" }}>{error}!!!</h2>}
       <input
         onChange={handleChange}
-        name="email"
         value={registerObj.email}
+        name="email"
         placeholder="Email"
         type="email"
       />
       <input
         onChange={handleChange}
-        name="password"
         value={registerObj.password}
+        name="password"
         placeholder="Password"
         type="text"
       />
       <input
         onChange={handleChange}
-        name="password_confirm"
         value={registerObj.password_confirm}
-        placeholder="Pasword confirm"
+        name="password_confirm"
+        placeholder="Password confirm"
         type="text"
       />
       <button>Register</button>
