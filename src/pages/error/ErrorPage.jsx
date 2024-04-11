@@ -1,10 +1,13 @@
 import React from "react";
+import Button from "../../widgets/buttons/Button";
 
 const ErrorPage = () => {
   return (
     <div>
       Something went wrong!!!
-      <button onClick={() => window.location.reload()}>Try to reload</button>
+      <Button color="green" onClick={() => window.location.reload()}>
+        Try to reload
+      </Button>
     </div>
   );
 };
