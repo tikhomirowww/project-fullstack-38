@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { registerUser } from "../../store/users/users.actions";
+import { useNavigate } from "react-router-dom";
 
 const RegisterPage = () => {
   const [registerObj, setRegisterObj] = useState({
@@ -10,6 +11,7 @@ const RegisterPage = () => {
   });
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   function handleChange(e) {
     const { value, name } = e.target;
@@ -24,7 +26,7 @@ const RegisterPage = () => {
         return;
       }
     }
-    dispatch(registerUser(registerObj));
+    dispatch(registerUser({ ...registerObj, navigate }));
   }
 
   const { error } = useSelector((state) => state.users);
@@ -32,7 +34,7 @@ const RegisterPage = () => {
   return (
     <form onSubmit={handleSubmit}>
       <h2>Register form</h2>
-      {error && <h2>{error}</h2>}
+      {error && <h2 style={{ color: "red" }}>{error}!!!</h2>}
       <input
         onChange={handleChange}
         value={registerObj.email}

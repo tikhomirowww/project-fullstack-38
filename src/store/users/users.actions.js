@@ -12,10 +12,32 @@ export const registerUser = createAsyncThunk(
     formData.append("password", data.password);
     formData.append("password_confirm", data.password_confirm);
     try {
-      const { data } = await axios.post(`${API}/account/register/`, formData);
-      return data;
+      const { data: result } = await axios.post(
+        `${API}/account/register/`,
+        formData
+      );
+      data.navigate("/login");
+      return result;
     } catch (error) {
       console.log(error);
+      dispatch(setError(Object.values(error.response.data).flat(2)[0]));
+    }
+  }
+);
+
+export const loginUser = createAsyncThunk(
+  "users/loginUser",
+  async ({ user, navigate }, { dispatch }) => {
+    console.log(user, "actions hello");
+    const formData = new FormData();
+    formData.append("email", user.email);
+    formData.append("password", user.password);
+    try {
+      const { data } = await axios.post(`${API}/account/login/`, formData);
+      localStorage.setItem("tokens", JSON.stringify(data));
+      navigate("/");
+      return data;
+    } catch (error) {
       dispatch(setError(Object.values(error.response.data).flat(2)[0]));
     }
   }

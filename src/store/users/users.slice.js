@@ -13,8 +13,8 @@ export const usersSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
-    builder.addCase(registerUser.rejected, (state, { payload }) => {
-      state.error = payload;
+    builder.addCase(registerUser.fulfilled, (state) => {
+      state.error = null;
     });
   },
 });
