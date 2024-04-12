@@ -33,7 +33,7 @@ const LoginPage = () => {
   const { error } = useSelector((state) => state.users);
   return (
     <form onSubmit={handleSubmit}>
-      <h2>Login form</h2>
+      <h2 style={{ fontSize: "50px", fontFamily: "cursive" }}>Login form</h2>
       {error && <h2 style={{ color: "red" }}>{error}!!!</h2>}
       <Input
         onChange={handleChange}
@@ -49,7 +49,9 @@ const LoginPage = () => {
         placeholder="Password"
         type="password"
       />
-      <Button color="blue">Login</Button>
+      <Button style={{ width: "200px", borderRadius: "30px" }} color="blue">
+        Login
+      </Button>
     </form>
   );
 };

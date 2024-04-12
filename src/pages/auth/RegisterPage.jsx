@@ -35,7 +35,7 @@ const RegisterPage = () => {
 
   return (
     <form onSubmit={handleSubmit}>
-      <h2>Register form</h2>
+      <h2 style={{ fontSize: "50px", fontFamily: "cursive" }}>Register form</h2>
       {error && <h2 style={{ color: "red" }}>{error}!!!</h2>}
       <Input
         onChange={handleChange}
