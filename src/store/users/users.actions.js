@@ -2,6 +2,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import { API } from "../../helpers/consts";
 import { setError } from "./users.slice";
+import { getConfig } from "@testing-library/react";
 
 export const registerUser = createAsyncThunk(
   "users/registerUser",
@@ -39,6 +40,30 @@ export const loginUser = createAsyncThunk(
       return data;
     } catch (error) {
       dispatch(setError(Object.values(error.response.data).flat(2)[0]));
+    }
+  }
+);
+
+export const checkAuth = createAsyncThunk(
+  "course/checkAuth",
+  async (navigate) => {
+    try {
+      const tokens = JSON.parse(localStorage.getItem("tokens"));
+      const { data } = await axios.post(
+        `${API}/account/token/refresh/`,
+        {
+          refresh: tokens.refresh,
+        },
+        getConfig()
+      );
+      localStorage.setItem(
+        "tokens",
+        JSON.stringify({ ...tokens, access: data.access })
+      );
+    } catch (error) {
+      alert("Срок вашей сессии истек");
+      navigate("/login");
+      console.log(error);
     }
   }
 );

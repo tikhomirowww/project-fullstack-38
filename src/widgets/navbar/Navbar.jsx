@@ -1,8 +1,19 @@
 import React, { useEffect, useRef, useState } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 import styles from "./navbar.module.css";
 import Button from "../buttons/Button";
+import { checkAuth } from "../../store/users/users.actions";
+import { useDispatch } from "react-redux";
 const Navbar = () => {
+  const location = useLocation();
+  const dispatch = useDispatch();
+  useEffect(() => {
+    const tokens = JSON.parse(localStorage.getItem("tokens"));
+    if (tokens) {
+      dispatch(checkAuth());
+      console.log(location);
+    }
+  }, [location]);
   const [open, setOpen] = useState(false);
   const navbarRef = useRef(null);
   const toggle = () => {
