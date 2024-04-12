@@ -2,7 +2,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import { API } from "../../helpers/consts";
 import { setError } from "./users.slice";
-import { getConfig } from "@testing-library/react";
+import { getConfig } from "../../helpers/functions";
 
 export const registerUser = createAsyncThunk(
   "users/registerUser",
@@ -36,6 +36,7 @@ export const loginUser = createAsyncThunk(
     try {
       const { data } = await axios.post(`${API}/account/login/`, formData);
       localStorage.setItem("tokens", JSON.stringify(data));
+      dispatch(getProfile());
       navigate("/");
       return data;
     } catch (error) {
@@ -45,7 +46,7 @@ export const loginUser = createAsyncThunk(
 );
 
 export const checkAuth = createAsyncThunk(
-  "course/checkAuth",
+  "users/checkAuth",
   async (navigate) => {
     try {
       const tokens = JSON.parse(localStorage.getItem("tokens"));
@@ -67,3 +68,13 @@ export const checkAuth = createAsyncThunk(
     }
   }
 );
+
+export const getProfile = createAsyncThunk("users/getProfile", async () => {
+  try {
+    const { data } = await axios.get(`${API}/account/profile`, getConfig());
+    console.log(data);
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+});

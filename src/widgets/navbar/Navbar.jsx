@@ -2,18 +2,27 @@ import React, { useEffect, useRef, useState } from "react";
 import { NavLink, useLocation } from "react-router-dom";
 import styles from "./navbar.module.css";
 import Button from "../buttons/Button";
-import { checkAuth } from "../../store/users/users.actions";
-import { useDispatch } from "react-redux";
+import { checkAuth, getProfile } from "../../store/users/users.actions";
+import { useDispatch, useSelector } from "react-redux";
+import { logout } from "../../store/users/users.slice";
 const Navbar = () => {
   const location = useLocation();
   const dispatch = useDispatch();
+  const tokens = JSON.parse(localStorage.getItem("tokens"));
   useEffect(() => {
-    const tokens = JSON.parse(localStorage.getItem("tokens"));
     if (tokens) {
       dispatch(checkAuth());
-      console.log(location);
     }
   }, [location]);
+
+  const { currentUser } = useSelector((state) => state.users);
+
+  useEffect(() => {
+    if (tokens) {
+      dispatch(getProfile());
+    }
+  }, [dispatch]);
+
   const [open, setOpen] = useState(false);
   const navbarRef = useRef(null);
   const toggle = () => {
@@ -44,18 +53,20 @@ const Navbar = () => {
           </NavLink>
         </li>
       </ul>
-      <img
-        onClick={toggle}
-        className={styles.avatar}
-        src="https://cdn-icons-png.flaticon.com/512/147/147144.png"
-        alt="avatar"
-      />
-
+      <div style={{ display: "flex", alignItems: "center", gap: "20px" }}>
+        <p style={{ color: "white" }}>{currentUser}</p>
+        <img
+          onClick={toggle}
+          className={styles.avatar}
+          src="https://cdn-icons-png.flaticon.com/512/147/147144.png"
+          alt="avatar"
+        />
+      </div>
       {open && (
         <div onClick={() => setOpen(!open)} className={styles.navbar}>
           <NavLink to={"/register"}>Register</NavLink>
           <NavLink to={"/login"}>Login</NavLink>
-          <span>Logout</span>
+          <span onClick={() => dispatch(logout())}>Logout</span>
         </div>
       )}
     </div>

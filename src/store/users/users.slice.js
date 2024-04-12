@@ -1,22 +1,32 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { registerUser } from "./users.actions";
+import { getProfile, registerUser } from "./users.actions";
 
 export const usersSlice = createSlice({
   name: "users",
   initialState: {
     error: null,
     loading: false,
+    currentUser: "",
   },
   reducers: {
     setError: (state, { payload }) => {
       state.error = payload;
     },
+    logout: (state) => {
+      localStorage.removeItem("tokens");
+      state.currentUser = "";
+    },
   },
+
   extraReducers: (builder) => {
-    builder.addCase(registerUser.fulfilled, (state) => {
-      state.error = null;
-    });
+    builder
+      .addCase(registerUser.fulfilled, (state) => {
+        state.error = null;
+      })
+      .addCase(getProfile.fulfilled, (state, { payload }) => {
+        state.currentUser = payload.email;
+      });
   },
 });
 
-export const { setError } = usersSlice.actions;
+export const { setError, logout } = usersSlice.actions;
