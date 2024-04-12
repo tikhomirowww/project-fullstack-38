@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { NavLink } from "react-router-dom";
 import styles from "./navbar.module.css";
+import Button from "../buttons/Button";
 const Navbar = () => {
   const [open, setOpen] = useState(false);
   const navbarRef = useRef(null);
@@ -20,19 +21,30 @@ const Navbar = () => {
   }, []);
   return (
     <div ref={navbarRef} className={styles.container}>
+      <ul className={styles.navs}>
+        <li>
+          <NavLink to={"/"}>
+            <Button style={{ color: "white" }}>Products list</Button>
+          </NavLink>
+        </li>
+        <li>
+          <NavLink to={"/add"}>
+            <Button style={{ color: "white" }}>Add productt</Button>
+          </NavLink>
+        </li>
+      </ul>
       <img
         onClick={toggle}
         className={styles.avatar}
         src="https://cdn-icons-png.flaticon.com/512/147/147144.png"
         alt="avatar"
       />
+
       {open && (
-        <div className={styles.navbar}>
+        <div onClick={() => setOpen(!open)} className={styles.navbar}>
           <NavLink to={"/register"}>Register</NavLink>
           <NavLink to={"/login"}>Login</NavLink>
           <span>Logout</span>
-          <NavLink to={"/"}>Products list</NavLink>
-          <NavLink to={"/add"}>Add product</NavLink>
         </div>
       )}
     </div>
