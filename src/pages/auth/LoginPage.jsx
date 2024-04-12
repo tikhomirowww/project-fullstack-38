@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { loginUser } from "../../store/users/users.actions";
+import Input from "../../widgets/inputs/Input";
+import Button from "../../widgets/buttons/Button";
 
 const LoginPage = () => {
   const [registerObj, setRegisterObj] = useState({
@@ -33,21 +35,21 @@ const LoginPage = () => {
     <form onSubmit={handleSubmit}>
       <h2>Login form</h2>
       {error && <h2 style={{ color: "red" }}>{error}!!!</h2>}
-      <input
+      <Input
         onChange={handleChange}
         value={registerObj.email}
         name="email"
         placeholder="Email"
         type="email"
       />
-      <input
+      <Input
         onChange={handleChange}
         value={registerObj.password}
         name="password"
         placeholder="Password"
-        type="text"
+        type="password"
       />
-      <button>Login</button>
+      <Button color="blue">Login</Button>
     </form>
   );
 };
