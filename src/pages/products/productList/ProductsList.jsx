@@ -14,7 +14,7 @@ const ProductsList = () => {
   console.log(products);
   return (
     <div className={styles.containerCard}>
-      {products.map((item) => (
+      {products?.map((item) => (
         <Cards key={item.id} item={item} />
       ))}
     </div>

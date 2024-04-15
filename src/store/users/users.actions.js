@@ -1,7 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import { API } from "../../helpers/consts";
-import { setError } from "./users.slice";
+import { logout, setError } from "./users.slice";
 import { getConfig } from "../../helpers/functions";
 
 export const registerUser = createAsyncThunk(
@@ -47,7 +47,7 @@ export const loginUser = createAsyncThunk(
 
 export const checkAuth = createAsyncThunk(
   "users/checkAuth",
-  async (navigate) => {
+  async (navigate, { dispatch }) => {
     try {
       const tokens = JSON.parse(localStorage.getItem("tokens"));
       const { data } = await axios.post(
@@ -63,6 +63,7 @@ export const checkAuth = createAsyncThunk(
       );
     } catch (error) {
       alert("Срок вашей сессии истек");
+      dispatch(logout());
       navigate("/login");
       console.log(error);
     }
