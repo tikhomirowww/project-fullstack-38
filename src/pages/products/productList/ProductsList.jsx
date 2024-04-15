@@ -6,12 +6,12 @@ import Cards from "../../../widgets/productCard/Cards";
 import styles from "./products.module.css";
 const ProductsList = () => {
   const dispatch = useDispatch();
-  console.log("qwert");
+  // console.log("qwert");
   useEffect(() => {
     dispatch(getProducts());
   }, [dispatch]);
   const { products } = useSelector((state) => state.products);
-  console.log(products);
+  // console.log(products);
   return (
     <div className={styles.containerCard}>
       {products?.map((item) => (
