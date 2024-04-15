@@ -5,13 +5,14 @@ import Input from "../../../widgets/inputs/Input";
 import Button from "../../../widgets/buttons/Button";
 import { addProduct } from "../../../store/products/products.actions";
 
+
 const AddProduct = () => {
   const [product, setProduct] = useState({
     title: "",
     description: "",
     price: "",
-    // image: "",
     category: 0,
+    image: "",
   });
 
   const dispatch = useDispatch();
@@ -31,6 +32,13 @@ const AddProduct = () => {
       }
     }
     dispatch(addProduct(product));
+    setProduct({
+      category: "",
+      title: "",
+      description: "",
+      price: "",
+    });
+
 
     navigate("/");
     console.log(product);

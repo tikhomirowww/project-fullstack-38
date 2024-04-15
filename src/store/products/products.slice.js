@@ -16,7 +16,7 @@ export const productsSlice = createSlice({
       })
       .addCase(getProducts.fulfilled, (state, { payload }) => {
         state.loading = false;
-        state.products = payload.results;
+        state.products = payload?.results;
       });
   },
 });

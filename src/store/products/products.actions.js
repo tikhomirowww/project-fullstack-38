@@ -28,3 +28,9 @@ export const addProduct = createAsyncThunk(
     }
   }
 );
+export const createProduct = createAsyncThunk(
+  "products/createProduct",
+  async (product) => {
+    axios.post(API, product);
+  }
+);
