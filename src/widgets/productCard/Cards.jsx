@@ -1,11 +1,17 @@
-import React from "react";
+import React, { useState } from "react";
 import Button from "../buttons/Button";
 import styles from "./card.module.css";
-
+import Input from "../inputs/Input";
 import { FcLikePlaceholder } from "react-icons/fc";
 import { FcLike } from "react-icons/fc";
 
 const Cards = ({ item }) => {
+  const [openInput, setOpenInput] = useState(false);
+
+  const toggle = () => {
+    setOpenInput(!openInput);
+  };
+
   return (
     <div className={styles.contCard}>
       <div className={styles.card}>
@@ -21,7 +27,11 @@ const Cards = ({ item }) => {
         {item.reviews.map((item) => (
           <p>{item.text}</p>
         ))}
-        <Button>Comment</Button>
+        <Button onClick={toggle} color="red">
+          Comment
+        </Button>
+
+        {openInput && <Input />}
       </div>
     </div>
   );
