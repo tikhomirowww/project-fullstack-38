@@ -5,6 +5,7 @@ import Button from "../buttons/Button";
 import { checkAuth, getProfile } from "../../store/users/users.actions";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../store/users/users.slice";
+import Search from "../search/Search";
 const Navbar = () => {
   //   const location = useLocation();
   const dispatch = useDispatch();
@@ -53,6 +54,7 @@ const Navbar = () => {
           </NavLink>
         </li>
       </ul>
+      <Search />
       <div style={{ display: "flex", alignItems: "center", gap: "20px" }}>
         <p style={{ color: "white" }}>{currentUser}</p>
         <img

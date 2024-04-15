@@ -1,8 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { getProducts } from "./products.actions";
+import { getCategories, getOneProduct, getProducts } from "./products.actions";
 
 const INIT_STATE = {
   products: [],
+  oneProduct: null,
+  categories: [],
   loading: false,
 };
 
@@ -17,6 +19,12 @@ export const productsSlice = createSlice({
       .addCase(getProducts.fulfilled, (state, { payload }) => {
         state.loading = false;
         state.products = payload?.results;
+      })
+      .addCase(getCategories.fulfilled, (state, { payload }) => {
+        state.categories = payload.results;
+      })
+      .addCase(getOneProduct.fulfilled, (state, { payload }) => {
+        state.oneProduct = payload;
       });
   },
 });

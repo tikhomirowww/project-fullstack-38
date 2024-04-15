@@ -11,6 +11,7 @@ function HandleLogout() {
 }
 
 $axios.interceptors.request.use(async (config) => {
+  // config.baseURL = API
   const tokens = JSON.parse(localStorage.getItem("tokens"));
   if (tokens) {
     config.headers.Authorization = `Bearer ${tokens.access}`;

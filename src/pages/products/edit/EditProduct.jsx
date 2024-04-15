@@ -1,14 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Input from "../../../widgets/inputs/Input";
 import Button from "../../../widgets/buttons/Button";
 import {
   addProduct,
+  editProduct,
   getCategories,
+  getOneProduct,
 } from "../../../store/products/products.actions";
 
-const AddProduct = () => {
+const EditProduct = () => {
   const [product, setProduct] = useState({
     title: "",
     description: "",
@@ -17,14 +19,29 @@ const AddProduct = () => {
     image: null,
   });
 
-  const { categories } = useSelector((state) => state.products);
+  const { categories, oneProduct } = useSelector((state) => state.products);
 
+  //   console.log(oneProduct, "oneProduct");
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const { id } = useParams();
 
   useEffect(() => {
     dispatch(getCategories());
+    dispatch(getOneProduct(id));
   }, [dispatch]);
+
+  useEffect(() => {
+    oneProduct &&
+      setProduct({
+        title: oneProduct.title,
+        description: oneProduct.description,
+        price: oneProduct.price,
+        category: oneProduct.category.id,
+      });
+  }, [oneProduct]);
+
+  console.log(product);
 
   function handleChange(e) {
     const { value, name, files } = e.target;
@@ -35,12 +52,11 @@ const AddProduct = () => {
     }
   }
 
-  console.log(product);
-
   function handleSubmit(e) {
     e.preventDefault();
     for (let key in product) {
-      if (key !== "image" && !product[key].trim()) {
+      console.log(key);
+      if (key !== "image" && key !== "category" && !product[key].trim()) {
         alert("some inputs are empty");
         return;
       }
@@ -53,7 +69,7 @@ const AddProduct = () => {
     formData.append("category", product.category);
     formData.append("image", product.image);
 
-    dispatch(addProduct(formData));
+    dispatch(editProduct({ id, product: formData }));
     setProduct({
       category: "",
       title: "",
@@ -70,7 +86,7 @@ const AddProduct = () => {
 
   return (
     <form onSubmit={handleSubmit}>
-      <h2 style={{ fontSize: "50px", fontFamily: "cursive" }}>AddProduct</h2>
+      <h2 style={{ fontSize: "50px", fontFamily: "cursive" }}>EditProduct</h2>
       {error && <h2 style={{ color: "red" }}>{error}!!!</h2>}
       <Input
         onChange={handleChange}
@@ -93,7 +109,7 @@ const AddProduct = () => {
         placeholder="price"
         type="text"
       />
-      <select onChange={handleChange} name="category" id="">
+      <select value={product.id} onChange={handleChange} name="category" id="">
         {categories.map((cat) => (
           <option value={cat.id} key={cat.id}>
             {cat.title}
@@ -111,4 +127,4 @@ const AddProduct = () => {
   );
 };
 
-export default AddProduct;
+export default EditProduct;

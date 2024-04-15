@@ -6,6 +6,7 @@ import MainLayout from "./MainLayout";
 import ErrorPage from "../pages/error/ErrorPage";
 import NotFoundPage from "../pages/not-found/NotFoundPage";
 import ProductsList from "../pages/products/productList/ProductsList";
+import EditProduct from "../pages/products/edit/EditProduct";
 
 export const router = createBrowserRouter([
   {
@@ -18,6 +19,7 @@ export const router = createBrowserRouter([
       { path: "/register", element: <RegisterPage /> },
       { path: "/login", element: <LoginPage /> },
       { path: "*", element: <NotFoundPage /> },
+      { path: "/edit/:id", element: <EditProduct /> },
     ],
   },
 ]);
