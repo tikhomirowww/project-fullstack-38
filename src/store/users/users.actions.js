@@ -3,6 +3,7 @@ import axios from "axios";
 import { API } from "../../helpers/consts";
 import { logout, setError } from "./users.slice";
 import { getConfig } from "../../helpers/functions";
+import { $axios } from "../../helpers/axios";
 
 export const registerUser = createAsyncThunk(
   "users/registerUser",
@@ -53,7 +54,7 @@ export const checkAuth = createAsyncThunk(
       const { data } = await axios.post(
         `${API}/account/token/refresh/`,
         {
-          refresh: tokens,
+          refresh: tokens.refresh,
         },
         getConfig()
       );
@@ -72,7 +73,7 @@ export const checkAuth = createAsyncThunk(
 
 export const getProfile = createAsyncThunk("users/getProfile", async () => {
   try {
-    const { data } = await axios.get(`${API}/account/profile`, getConfig());
+    const { data } = await $axios.get(`${API}/account/profile`);
     console.log(data);
     return data;
   } catch (error) {

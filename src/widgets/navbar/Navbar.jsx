@@ -6,14 +6,14 @@ import { checkAuth, getProfile } from "../../store/users/users.actions";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../store/users/users.slice";
 const Navbar = () => {
-  const location = useLocation();
+  //   const location = useLocation();
   const dispatch = useDispatch();
   const tokens = JSON.parse(localStorage.getItem("tokens"));
-  useEffect(() => {
-    if (tokens) {
-      dispatch(checkAuth());
-    }
-  }, [location]);
+  //   useEffect(() => {
+  //     if (tokens) {
+  //       dispatch(checkAuth());
+  //     }
+  //   }, [location]);
 
   const { currentUser } = useSelector((state) => state.users);
 
