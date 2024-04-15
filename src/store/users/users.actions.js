@@ -53,7 +53,7 @@ export const checkAuth = createAsyncThunk(
       const { data } = await axios.post(
         `${API}/account/token/refresh/`,
         {
-          refresh: tokens.refresh,
+          refresh: tokens,
         },
         getConfig()
       );

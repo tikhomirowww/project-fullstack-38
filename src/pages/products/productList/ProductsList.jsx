@@ -5,12 +5,12 @@ import Button from "../../../widgets/buttons/Button";
 
 const ProductsList = () => {
   const dispatch = useDispatch();
-  console.log("qwert");
+  // console.log("qwert");
   useEffect(() => {
     dispatch(getProducts());
   }, [dispatch]);
   const { products } = useSelector((state) => state.products);
-  console.log(products);
+  // console.log(products);
   return (
     <div>
       {products.map((item) => (
