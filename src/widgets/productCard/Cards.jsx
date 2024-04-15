@@ -7,7 +7,6 @@ import { FcLike } from "react-icons/fc";
 
 const Cards = ({ item }) => {
   const [openInput, setOpenInput] = useState(false);
-
   const toggle = () => {
     setOpenInput(!openInput);
   };
